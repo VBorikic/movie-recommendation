@@ -11,7 +11,13 @@ package vsm;
  */
 public class CosineSimilarity {
 
-    public double getCosineSimilarity(double[] vectorA, double[] vectorB) {
+    /**
+     *  Calculates cosine similarity between two normalized vectors.
+     * @param vectorA first vector
+     * @param vectorB second vector
+     * @return cosine similarity value
+     */
+    public double calculateCosineSimilarity(double[] vectorA, double[] vectorB) {
         double dotProduct = 0.0;
         double normVectorA = 0.0;
         double normVectorB = 0.0;
