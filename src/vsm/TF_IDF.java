@@ -18,16 +18,16 @@ public class TF_IDF {
      */
     public double[][] calculateTFIDF(int[][] tfMatrix) {
 
-        int numOfMovies = tfMatrix.length;
-        int numOfNodes = tfMatrix[0].length;
+        int numOfObjects = tfMatrix.length;
+        int numOfFeatures = tfMatrix[0].length;
 
-        double[][] tfidfMatrix = new double[numOfMovies][numOfNodes];
+        double[][] tfidfMatrix = new double[numOfObjects][numOfFeatures];
 
-        int[] counters = new int[numOfNodes];;
+        int[] counters = new int[numOfFeatures];;
         System.out.println("tfidf matrix");
-        for (int i = 0; i < numOfMovies; i++) {
+        for (int i = 0; i < numOfObjects; i++) {
 
-            // counts number of movies that one actor starred, director directed etc
+            // counts number of objects that one feature has a connection 
             for (int j = 0; j < tfMatrix[i].length; j++) {
                 if (tfMatrix[i][j] == 1) {
                     counters[j]++;
@@ -35,10 +35,10 @@ public class TF_IDF {
             }
         }
         System.out.println("counters:" + counters[0] + counters[1] + counters[2] + counters[3]);
-        for (int i = 0; i < numOfMovies; i++) {
+        for (int i = 0; i < numOfObjects; i++) {
 
             for (int j = 0; j < tfMatrix[i].length; j++) {
-                double logValue = (double) numOfMovies / counters[j];
+                double logValue = (double) numOfObjects / counters[j];
                 tfidfMatrix[i][j] = tfMatrix[i][j] * Math.log(logValue);
                 System.out.println(i + "," + j + "= " + tfidfMatrix[i][j]);
             }

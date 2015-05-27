@@ -11,7 +11,7 @@ package vsm;
  */
 public class VSMAlgorithm {
 
-    double[] movieSimilarityIndexes;
+    double[] objectSimilarityIndexes;
     CosineSimilarity cs;
     TF_IDF tfidf;
 
@@ -21,22 +21,22 @@ public class VSMAlgorithm {
     }
 
     /**
-     *  Calculates similarity between pairs of movies from the input matrix
-     * @param binaryMatrix shows if every movie contains certain property(actor, director etc) or not
-     * @param chosenMovieRow position in binary matrix of movie that we compare to other movies
-     * @return double[] array of movies similarity values; array values have to be between 0 and 1
+     *  Calculates similarity between pairs of objects from the input matrix
+     * @param binaryMatrix shows if every objects contains certain property/feature or not
+     * @param chosenObjectRow position in binary matrix of object that we compare to other objects
+     * @return double[] array of objects similarity values; array values have to be between 0 and 1
      */
-    public double[] calculateMovieSimalarities(int[][] binaryMatrix, int chosenMovieRow) {
+    public double[] calculateObjectSimalarities(int[][] binaryMatrix, int chosenObjectRow) {
 
-        movieSimilarityIndexes = new double[binaryMatrix.length];
+        objectSimilarityIndexes = new double[binaryMatrix.length];
 
 
         double[][] normalizedTFIDFMatrix = tfidf.normalizeMatrixRows(tfidf.calculateTFIDF(binaryMatrix));
 
-        for (int i = 0; i < movieSimilarityIndexes.length; i++) {
-            movieSimilarityIndexes[i]
-                    = cs.calculateCosineSimilarity(normalizedTFIDFMatrix[chosenMovieRow-1], normalizedTFIDFMatrix[i]);
+        for (int i = 0; i < objectSimilarityIndexes.length; i++) {
+            objectSimilarityIndexes[i]
+                    = cs.calculateCosineSimilarity(normalizedTFIDFMatrix[chosenObjectRow-1], normalizedTFIDFMatrix[i]);
         }
-        return movieSimilarityIndexes;
+        return objectSimilarityIndexes;
     }
 }

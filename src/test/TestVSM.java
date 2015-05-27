@@ -39,7 +39,7 @@ public class TestVSM {
 //        System.out.println("slicnost: "+cs.calculateCosineSimilarity(nizA, nizB)); 
 //        t.calculateTFIDF(tfTest);
 //        t.normalizeMatrixRows(tfTestDbl);
-        double[] slicnosti = vsm.calculateMovieSimalarities(tfTestInt, 2);
+        double[] slicnosti = vsm.calculateObjectSimalarities(tfTestInt, 2);
         System.out.println("Poredjenje filma 2 sa ostalim filmovima");
         //ocekivani rezultat je [ 0 film 1 je potpuno razlicit od filma dva ( nijedan isti property)
         //                        1 film 2 se poredi sa samin sobom
