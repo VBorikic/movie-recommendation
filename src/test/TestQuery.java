@@ -6,6 +6,7 @@
 package test;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import persistence.DataModelManager;
 import services.MovieService;
@@ -24,17 +25,23 @@ public class TestQuery {
         DataModelManager.getInstance().importData("data" + File.separator + "data.rdf", "RDF/XML");
 //        DataModelManager.getInstance().getModel().write(System.out, "TURTLE");
         int brojac = 0;
-        		List<String> movies = queryService.getAllMovies();
-		
-		if (movies != null) {
-			for (String m : movies) {
-				System.out.println(m);
-                                brojac++;
-			}
-		}
-                System.out.println("Model sadrzi "+brojac+" filmova.");
-        
-        
+        int duplicates = 0;
+        List<String> movies = queryService.getAllMovies();
+        List<String> noDUplicateMlovies = new ArrayList<>();
+        if (movies != null) {
+            for (String m : movies) {
+                if (!noDUplicateMlovies.contains(m)) {
+                    noDUplicateMlovies.add(m);
+                } else {
+                    duplicates++;
+                }
+                System.out.println(m);
+                brojac++;
+            }
+        }
+        System.out.println("Model sadrzi " + brojac + " filmova.");
+        System.out.println("Model sadrzi " + duplicates + " duplikata.");
+
         DataModelManager.getInstance().closeDataModel();
     }
 }

@@ -18,7 +18,7 @@ public class MovieService {
                 = "PREFIX rdf: <" + Constants.RDF_NS + "> "
                 + "PREFIX dbpedia-owl: <" + Constants.DBPEDIA_OWL + "> "
                 + "PREFIX foaf: <" + Constants.FOAF_NS + "> "
-                + "SELECT ?name "
+                + "SELECT distinct ?name "
                 + "WHERE  { "
                 + "?film rdf:type dbpedia-owl:Film ;"
                 + "foaf:name ?name ."

@@ -27,14 +27,14 @@ public class TF_IDF {
         System.out.println("tfidf matrix");
         for (int i = 0; i < numOfObjects; i++) {
 
-            // counts number of objects that one feature has a connection 
+            // counts number of objects that one feature has a connection to
             for (int j = 0; j < tfMatrix[i].length; j++) {
                 if (tfMatrix[i][j] == 1) {
                     counters[j]++;
                 }
             }
         }
-        System.out.println("counters:" + counters[0] + counters[1] + counters[2] + counters[3]);
+//        System.out.println("counters:" + counters[0] + counters[1] + counters[2] + counters[3]);
         for (int i = 0; i < numOfObjects; i++) {
 
             for (int j = 0; j < tfMatrix[i].length; j++) {
