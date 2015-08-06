@@ -31,7 +31,10 @@ public class MovieDataExtractor {
         movies = new ArrayList<>();
         uniqueFeaturesForProperty = new ArrayList<>();
     }
-
+    /** Creates data matrix for certain property using RDF data, and sets it to MovieProperty attribute at the end
+     * @param model RDF data model
+     * @param mp MovieProperty
+     */
     public void extractMovieDataFromModel(Model model, MovieProperty mp) {
 
         String propertyName = mp.getName();

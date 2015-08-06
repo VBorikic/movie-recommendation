@@ -24,7 +24,7 @@ public class TestQuery {
         // loading data
         DataModelManager.getInstance().importData("data" + File.separator + "data.rdf", "RDF/XML");
 //        DataModelManager.getInstance().getModel().write(System.out, "TURTLE");
-        int brojac = 0;
+//        int brojac = 0;
         int duplicates = 0;
         List<String> movies = queryService.getAllMovies();
         List<String> noDUplicateMlovies = new ArrayList<>();
@@ -36,10 +36,10 @@ public class TestQuery {
                     duplicates++;
                 }
                 System.out.println(m);
-                brojac++;
+//                brojac++;
             }
         }
-        System.out.println("Model sadrzi " + brojac + " filmova.");
+        System.out.println("Model sadrzi " + noDUplicateMlovies.size() + " filmova.");
         System.out.println("Model sadrzi " + duplicates + " duplikata.");
 
         DataModelManager.getInstance().closeDataModel();
