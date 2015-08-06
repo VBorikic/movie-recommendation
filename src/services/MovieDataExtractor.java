@@ -37,7 +37,7 @@ public class MovieDataExtractor {
         String propertyName = mp.getName();
 
         Property pr = null;
-
+        //inicijalizuj property za poredjenje
         if (propertyName.equals("subject")) {
             pr = new PropertyImpl(Constants.DC_TERMS + propertyName);
         } else {
@@ -51,7 +51,7 @@ public class MovieDataExtractor {
             Resource subject = stmt.getSubject();     // get the subject
             Property pred = stmt.getPredicate();   // get the predicate
             RDFNode object = stmt.getObject();
-
+            
             if (pred.equals(pr)) {
 
                 if (!movies.contains(subject)) {

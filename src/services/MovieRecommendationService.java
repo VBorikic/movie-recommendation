@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import persistence.DataModelManager;
 import session.Session;
-import vsm.CosineSimilarity;
-import vsm.TF_IDF;
-import vsm.VSMAlgorithm;
 
 /**
  *
@@ -54,6 +51,9 @@ public class MovieRecommendationService {
 //
 //            double[] simmilarityValues = vsm.calculateObjectSimalarities(movieProperty.getDataMatrix(), 695);
 //        }
+        
+        //TODO izracunaj globalni similarity index vektor na osnovu pojedinacnih similarity vektora i vrati rezultat
+        //return list<String> imena nekoliko najslicnijih filmova
         return null;
     }
 }
