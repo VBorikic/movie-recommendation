@@ -47,7 +47,7 @@ public class MovieDataExtractor {
             pr = new PropertyImpl(Constants.DBPEDIA_OWL + propertyName);
         }
 
-        StmtIterator iter = model.listStatements();
+        StmtIterator iter = model.listStatements(null, pr, (RDFNode)null);
 
         while (iter.hasNext()) {
             Statement stmt = iter.nextStatement();  // get next statement
@@ -55,7 +55,6 @@ public class MovieDataExtractor {
             Property pred = stmt.getPredicate();   // get the predicate
             RDFNode object = stmt.getObject();
             
-            if (pred.equals(pr)) {
 
                 if (!movies.contains(subject)) {
                     movies.add(subject);
@@ -63,7 +62,6 @@ public class MovieDataExtractor {
                 if (!uniqueFeaturesForProperty.contains(object)) {
                     uniqueFeaturesForProperty.add(object);
                 }
-            }
         }
 
             System.out.println("property: " + propertyName);
