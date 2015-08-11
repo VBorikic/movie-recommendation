@@ -78,7 +78,7 @@ public class MovieDataExtractor {
         while (iter2.hasNext()) {
             Statement stmt = iter2.next();
             Resource subject = stmt.getSubject();
-            Property pred = stmt.getPredicate();
+//            Property pred = stmt.getPredicate();
             RDFNode object = stmt.getObject();
             if (stmt.getPredicate().equals(pr)) {
                 for (int i = 0; i < movieMatrix.length; i++) {

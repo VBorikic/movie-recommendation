@@ -8,9 +8,11 @@ package services;
 import domen.MovieProperty;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import persistence.DataModelManager;
 import session.Session;
+import vsm.VSMAlgorithm;
 
 /**
  *
@@ -24,7 +26,7 @@ public class MovieRecommendationService {
         movieSuggestions = new ArrayList<>();
     }
 
-    public List<String> suggestMovies(String movieTitle, int[] ponderValues) {
+    public List<String> suggestMovies(String movieTitle, double[] ponderValues, int resultsSize) {
         //import data into model/dataset
         DataModelManager.getInstance().importData("data" + File.separator + "data.rdf", "RDF/XML");
 
@@ -44,16 +46,43 @@ public class MovieRecommendationService {
             mde.extractMovieDataFromModel(DataModelManager.getInstance().getModel(), mp);
         }
 
-//        VSMAlgorithm vsm = new VSMAlgorithm();
-//        List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
-//
-//        for (MovieProperty movieProperty : movieProperties) {
-//
-//            double[] simmilarityValues = vsm.calculateObjectSimalarities(movieProperty.getDataMatrix(), 695);
-//        }
-        
-        //TODO izracunaj globalni similarity index vektor na osnovu pojedinacnih similarity vektora i vrati rezultat
+        List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
+
+        calculateSimilarityValues(movieProperties);
+
+        double[] globalSimalarityIndexes = normalizeSimilarityValues(movieProperties, ponderValues);
+        //sort results
+        Arrays.sort(globalSimalarityIndexes);
+
+        for (int i = globalSimalarityIndexes.length - 1; i > globalSimalarityIndexes.length - (resultsSize + 1); i--) {
+            //-1 zbog toga je sto je najbolji rezultat poredjenje filma sa samim sobom, pa ga iskljucujemo iz rezultata
+            movieSuggestions.add(movieTitle);
+        }
+
         //return list<String> imena nekoliko najslicnijih filmova
         return null;
     }
+
+    private double[] normalizeSimilarityValues(List<MovieProperty> movieProperties, double[] ponderValues) {
+        int similarityVectorLength = movieProperties.get(0).getSimmilarityIndexes().length;
+        double[] globalSimalarityIndexes = new double[similarityVectorLength];
+        for (int i = 0; i < movieProperties.size(); i++) {
+            double[] similarityArray = movieProperties.get(i).getSimmilarityIndexes();
+            
+            for (int j = 0; j < similarityVectorLength; j++) {
+                globalSimalarityIndexes[j] += similarityArray[j] * ponderValues[i];
+            }
+        }
+        return globalSimalarityIndexes;
+    }
+
+    private void calculateSimilarityValues(List<MovieProperty> movieProperties) {
+        VSMAlgorithm vsm = new VSMAlgorithm();
+        for (MovieProperty movieProperty : movieProperties) {
+//            double[] simmilarityValues = vsm.calculateObjectSimalarities(movieProperty.getDataMatrix(), 695);
+            //izracunaj vektor slicnosti za jedan properti i setuj ga movieProperty objektu
+            movieProperty.setSimmilarityIndexes(vsm.calculateObjectSimalarities(movieProperty.getDataMatrix(), 695));
+        }
+    }
+
 }

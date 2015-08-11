@@ -42,7 +42,7 @@ public class TestAll {
 //
 //        DataModelManager.getInstance().closeDataModel();
         MovieRecommendationService mrs = new MovieRecommendationService();
-        int [] niz = new int[3];
-        mrs.suggestMovies("naslov", niz);
+        double[] niz = {0.3,0.3,0.4};
+        mrs.suggestMovies("naslov", niz,5);
     }
 }
