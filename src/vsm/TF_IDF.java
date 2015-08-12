@@ -23,7 +23,7 @@ public class TF_IDF {
 
         double[][] tfidfMatrix = new double[numOfObjects][numOfFeatures];
 
-        int[] counters = new int[numOfFeatures];;
+        int[] counters = new int[numOfFeatures];
         System.out.println("tfidf matrix");
         for (int i = 0; i < numOfObjects; i++) {
 
@@ -39,6 +39,9 @@ public class TF_IDF {
 
             for (int j = 0; j < tfMatrix[i].length; j++) {
                 double logValue = (double) numOfObjects / counters[j];
+                if (Double.isNaN(logValue)) {                   
+                System.out.println(i + "," + j + " Nan je logValue");
+                }
                 tfidfMatrix[i][j] = tfMatrix[i][j] * Math.log(logValue);
                 System.out.println(i + "," + j + "= " + tfidfMatrix[i][j]);
             }
@@ -61,15 +64,12 @@ public class TF_IDF {
         for (int i = 0; i < numOfRows; i++) {
             double normValue = 0;
             double testSum = 0;
-            for (int j = 0; j < numOfColumns; j++) {
-              
-                normValue += Math.pow(matrix[i][j], 2);
-                
+            for (int j = 0; j < numOfColumns; j++) {              
+                normValue += Math.pow(matrix[i][j], 2);               
             }
-
+            
             for (int j = 0; j < numOfColumns; j++) {
-                normalizedMatrix[i][j] = matrix[i][j] / (Math.sqrt(normValue));
-                
+                normalizedMatrix[i][j] = matrix[i][j] / (Math.sqrt(normValue));               
                 testSum += Math.pow(matrix[i][j] / (Math.sqrt(normValue)),2);
             }
             System.out.println("row " + i + ": " + Math.sqrt(testSum)); // has to be 1.0

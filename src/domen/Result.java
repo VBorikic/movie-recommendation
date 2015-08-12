@@ -5,30 +5,27 @@
  */
 package domen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Vlada
  */
 public class Result {
-    
-    private String name;
-    private double value;
 
-    public String getName() {
-        return name;
+    private List<SimilarityValue> finalSimilarities;
+
+    public Result() {
+        finalSimilarities = new ArrayList<>();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<SimilarityValue> getSimilarities() {
+        return finalSimilarities;
     }
 
-    public double getValue() {
-        return value;
+    public void setSimilarities(List<SimilarityValue> finalSimilarities) {
+        this.finalSimilarities = finalSimilarities;
     }
 
-    public void setValue(double value) {
-        this.value = value;
-    }
-    
-    
 }

@@ -5,6 +5,9 @@
  */
 package domen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Vlada
@@ -13,8 +16,14 @@ public class MovieProperty {
 
     private String name;
     private int[][] dataMatrix;
-    private double[] simmilarityIndexes;
+//    private double[] similarityIndexes;
+//    private SimilarityValue[] similarities;
+    private List<SimilarityValue> similarities;
 
+    public MovieProperty() {
+        similarities = new ArrayList<>();
+    }
+    
     public String getName() {
         return name;
     }
@@ -31,12 +40,26 @@ public class MovieProperty {
         this.dataMatrix = dataMatrix;
     }
 
-    public double[] getSimmilarityIndexes() {
-        return simmilarityIndexes;
+//    public double[] getSimmilarityIndexes() {
+//        return similarityIndexes;
+//    }
+//
+//    public void setSimmilarityIndexes(double[] simmilarityIndexes) {
+//        this.similarityIndexes = simmilarityIndexes;
+//    }
+//    public SimilarityValue[] getSimilarities() {
+//        return similarities;
+//    }
+//
+//    public void setSimilarities(SimilarityValue[] similarities) {
+//        this.similarities = similarities;
+//    }
+    public List<SimilarityValue> getSimilarities() {
+        return similarities;
     }
 
-    public void setSimmilarityIndexes(double[] simmilarityIndexes) {
-        this.simmilarityIndexes = simmilarityIndexes;
+    public void setSimilarities(List<SimilarityValue> similarities) {
+        this.similarities = similarities;
     }
 
 }
