@@ -25,12 +25,8 @@ import util.Constants;
  */
 public class MovieDataExtractor {
 
-    List<Resource> movies;
-    List<RDFNode> uniqueFeaturesForProperty;
-
     public MovieDataExtractor() {
-        movies = new ArrayList<>();
-        uniqueFeaturesForProperty = new ArrayList<>();
+        
     }
 
     /**
@@ -41,7 +37,8 @@ public class MovieDataExtractor {
      * @param mp MovieProperty
      */
     public void extractMovieDataFromModel(Model model, MovieProperty mp) {
-
+        List<Resource> movies = new ArrayList<>();
+         List<RDFNode> uniqueFeaturesForProperty = new ArrayList<>();;
         String propertyName = mp.getName();
 
         Property pr = null;
@@ -97,7 +94,7 @@ public class MovieDataExtractor {
         }
 //        return movieMatrix;
         mp.setDataMatrix(movieMatrix);
-        System.out.println("Popunjena matrica");
+        System.out.println("Popunjena matrica "+propertyName);
     }
 
     public void testDataExtraction() {

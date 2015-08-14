@@ -85,9 +85,15 @@ public class MovieRecommendationService {
     private void normalizeSimilarityValues(List<MovieProperty> movieProperties, double[] ponderValues, Result res) {
 
         int similarityVectorLength = movieProperties.get(0).getSimilarities().size();
-
+        System.out.println("similarityVectorLength size: " + similarityVectorLength);
+        System.out.println("Session.getInstance().getMovies() size: "+Session.getInstance().getMovies().size());
+        System.out.println("starring lista film-double size: "+movieProperties.get(0).getSimilarities().size());
+        System.out.println("director lista film-double size: "+movieProperties.get(1).getSimilarities().size());
+        System.out.println("subject lista film-double size: "+movieProperties.get(2).getSimilarities().size());
+        
         for (int i = 0; i < similarityVectorLength; i++) {
             //prepare movie set for results
+            res.getSimilarities().add(new SimilarityValue());
             res.getSimilarities().get(i).setMovie(Session.getInstance().getMovies().get(i));
         }
 //        double[] globalSimalarityIndexes = new double[similarityVectorLength];
@@ -117,6 +123,7 @@ public class MovieRecommendationService {
             double[] values = vsm.calculateObjectSimalarities(movieProperty.getDataMatrix(), 300);
             //set calculated values to list of similarities  movie-value pairs
             for (int i = 0; i < values.length; i++) {
+//                movieProperty.getSimilarities().add(new SimilarityValue());
                 movieProperty.getSimilarities().get(i).setSimilarity(values[i]);
             }
         }
