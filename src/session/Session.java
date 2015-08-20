@@ -7,6 +7,7 @@ package session;
 
 import com.hp.hpl.jena.rdf.model.Resource;
 import domen.MovieProperty;
+import domen.MovieRecommendation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class Session {
     private static Session instance;
     private List<Resource> movies;
     private List<MovieProperty> movieProperties;
+    private List<MovieRecommendation> recommendations;
 
     public static Session getInstance() {
         if (instance == null) {
@@ -46,4 +48,14 @@ public class Session {
         movieProperties.add(mp);
     }
 
+    public List<MovieRecommendation> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(List<MovieRecommendation> recommendations) {
+        this.recommendations = recommendations;
+    }
+    public int getMovieNumberFromList(Resource movie){
+        return movies.indexOf(movie);
+    }
 }

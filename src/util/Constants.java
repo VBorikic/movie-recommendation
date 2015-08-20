@@ -22,5 +22,5 @@ public class Constants {
     public static final String DBPEDIA_OWL = "http://dbpedia.org/ontology/";
     public static final String DC_TERMS = "http://purl.org/dc/terms/";
     public static final String XSD = "http://www.w3.org/2001/XMLSchema#";
-
+    
 }

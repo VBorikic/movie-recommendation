@@ -5,16 +5,7 @@
  */
 package test;
 
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.impl.PropertyImpl;
-import java.io.File;
-import persistence.DataModelManager;
-import services.MovieDataExtractor;
 import services.MovieRecommendationService;
-import util.Constants;
-import vsm.CosineSimilarity;
-import vsm.TF_IDF;
-import vsm.VSMAlgorithm;
 
 /**
  *
@@ -43,6 +34,6 @@ public class TestAll {
 //        DataModelManager.getInstance().closeDataModel();
         MovieRecommendationService mrs = new MovieRecommendationService();
         double[] niz = {0.3,0.3,0.4};
-        mrs.suggestMovies("naslov", niz,5);
+        mrs.suggestMovies( niz,5);
     }
 }

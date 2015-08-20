@@ -5,7 +5,9 @@
  */
 package services;
 
+import com.hp.hpl.jena.rdf.model.Resource;
 import domen.MovieProperty;
+import domen.MovieRecommendation;
 import domen.Result;
 import domen.SimilarityValue;
 import java.io.File;
@@ -30,7 +32,7 @@ public class MovieRecommendationService {
         movieSuggestions = new ArrayList<>();
     }
 
-    public List<String> suggestMovies(String movieTitle, double[] ponderValues, int resultsSize) {
+    public List<String> suggestMovies(double[] ponderValues, int resultsSize) {
         //import data into model/dataset
         DataModelManager.getInstance().importData("data" + File.separator + "data.rdf", "RDF/XML");
 
@@ -53,8 +55,20 @@ public class MovieRecommendationService {
 //        mde.testDataExtraction();
         //calculate results
         List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
+        for (int i = 0; i < 9; i++) {
+            
+        calculateOneMovie(movieProperties, ponderValues,Session.getInstance().getMovies().get(i));
+        }
+        //TODO call writing to XML
+        
+        //return list<String> imena nekoliko najslicnijih filmova
+        return null;
+    }
+
+    private void calculateOneMovie(List<MovieProperty> movieProperties, double[] ponderValues, Resource movie) {
         Result res = new Result();
-        calculateSimilarityValues(movieProperties);
+        int movieNumber = Session.getInstance().getMovieNumberFromList(movie);
+        calculateSimilarityValues(movieProperties, movieNumber);
 
         normalizeSimilarityValues(movieProperties, ponderValues, res);
 
@@ -68,29 +82,25 @@ public class MovieRecommendationService {
             }
         });
 
-        //return sugestions
-//        for (int i = globalSimalarityIndexes.length - 1; i > globalSimalarityIndexes.length - (resultsSize + 1); i--) {
-//            //-1 zbog toga je sto je najbolji rezultat poredjenje filma sa samim sobom, pa ga iskljucujemo iz rezultata
-//            movieSuggestions.add(movieTitle);
+//        System.out.println("rezultati");
+//        for (int i = 1; i < resultsSize + 1; i++) {
+//            System.out.println(res.getSimilarities().get(i).getMovie().getURI());
 //        }
-        System.out.println("rezultati");
-        for (int i = 1; i < resultsSize + 1; i++) {
-            System.out.println(res.getSimilarities().get(i).getMovie().getURI());
+        MovieRecommendation mr = new MovieRecommendation();
+        mr.setMovie(null);
+        List<Resource> list = new ArrayList<>();
+        for (int i = 1; i < 11; i++) {
+            list.add(res.getSimilarities().get(i).getMovie());
         }
-
-        //return list<String> imena nekoliko najslicnijih filmova
-        return null;
+        mr.setMovieSugestions(list);
+        //add recommendation to list
+        Session.getInstance().getRecommendations().add(mr);
     }
 
     private void normalizeSimilarityValues(List<MovieProperty> movieProperties, double[] ponderValues, Result res) {
 
         int similarityVectorLength = movieProperties.get(0).getSimilarities().size();
-        System.out.println("similarityVectorLength size: " + similarityVectorLength);
-        System.out.println("Session.getInstance().getMovies() size: "+Session.getInstance().getMovies().size());
-        System.out.println("starring lista film-double size: "+movieProperties.get(0).getSimilarities().size());
-        System.out.println("director lista film-double size: "+movieProperties.get(1).getSimilarities().size());
-        System.out.println("subject lista film-double size: "+movieProperties.get(2).getSimilarities().size());
-        
+
         for (int i = 0; i < similarityVectorLength; i++) {
             //prepare movie set for results
             res.getSimilarities().add(new SimilarityValue());
@@ -115,12 +125,12 @@ public class MovieRecommendationService {
         System.out.println("similarities pondered.");
     }
 
-    private void calculateSimilarityValues(List<MovieProperty> movieProperties) {
+    private void calculateSimilarityValues(List<MovieProperty> movieProperties, int movieFromList) {
         VSMAlgorithm vsm = new VSMAlgorithm();
         for (MovieProperty movieProperty : movieProperties) {
             //izracunaj vektor slicnosti za jedan properti i setuj ga movieProperty objektu
 //            movieProperty.setSimmilarityIndexes(vsm.calculateObjectSimalarities(movieProperty.getDataMatrix(), 695));
-            double[] values = vsm.calculateObjectSimalarities(movieProperty.getDataMatrix(), 300);
+            double[] values = vsm.calculateObjectSimalarities(movieProperty.getDataMatrix(), movieFromList);
             //set calculated values to list of similarities  movie-value pairs
             for (int i = 0; i < values.length; i++) {
 //                movieProperty.getSimilarities().add(new SimilarityValue());
