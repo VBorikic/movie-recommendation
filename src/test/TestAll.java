@@ -40,38 +40,38 @@ public class TestAll {
 //
 //        DataModelManager.getInstance().closeDataModel();
         
-  //pozivanje aplikacije      
-//        MovieRecommendationService mrs = new MovieRecommendationService();
-//        double[] niz = {0.3, 0.3, 0.4};
-//        mrs.suggestMovies(niz, 5);
+//  pozivanje aplikacije      
+        MovieRecommendationService mrs = new MovieRecommendationService();
+        double[] niz = {0.3, 0.3, 0.4};
+        mrs.suggestMovies(niz, 5);
 
-        List<MovieRecommendation> list = new ArrayList<>();
-
-        MovieRecommendation mr = new MovieRecommendation();
-        List<Resource> listaPreporuka = new ArrayList<>();
-        Resource film = new ResourceImpl("film proba 3");
-        mr.setMovie(film);
-        for (int i = 0; i < 4; i++) {
-            Resource pr = new ResourceImpl("preporuka " + (i + 1));
-            listaPreporuka.add(pr);
-        }
-        mr.setMovieSugestions(listaPreporuka);
-        list.add(mr);
-        
-                MovieRecommendation mr2 = new MovieRecommendation();
-        List<Resource> listaPreporuka2 = new ArrayList<>();
-        Resource film2 = new ResourceImpl("film proba 4");
-        mr2.setMovie(film2);
-        for (int i = 0; i < 4; i++) {
-            Resource pr = new ResourceImpl("preporuka - 2 - " + (i + 1));
-            listaPreporuka2.add(pr);
-        }
-        mr2.setMovieSugestions(listaPreporuka2);
-        list.add(mr2);
-        
-//        CacheRecommendations cr = new CacheRecommendations(list);
-//        cr.cacheToXML();
-        CacheContinious cc = new CacheContinious(list);
-        cc.cacheToXML();
+//        List<MovieRecommendation> list = new ArrayList<>();
+//
+//        MovieRecommendation mr = new MovieRecommendation();
+//        List<Resource> listaPreporuka = new ArrayList<>();
+//        Resource film = new ResourceImpl("film proba 3");
+//        mr.setMovie(film);
+//        for (int i = 0; i < 4; i++) {
+//            Resource pr = new ResourceImpl("preporuka " + (i + 1));
+//            listaPreporuka.add(pr);
+//        }
+//        mr.setMovieSugestions(listaPreporuka);
+//        list.add(mr);
+//        
+//                MovieRecommendation mr2 = new MovieRecommendation();
+//        List<Resource> listaPreporuka2 = new ArrayList<>();
+//        Resource film2 = new ResourceImpl("film proba 4");
+//        mr2.setMovie(film2);
+//        for (int i = 0; i < 4; i++) {
+//            Resource pr = new ResourceImpl("preporuka - 2 - " + (i + 1));
+//            listaPreporuka2.add(pr);
+//        }
+//        mr2.setMovieSugestions(listaPreporuka2);
+//        list.add(mr2);
+//        
+////        CacheRecommendations cr = new CacheRecommendations(list);
+////        cr.cacheToXML();
+//        CacheContinious cc = new CacheContinious(list);
+//        cc.cacheToXML();
     }
 }

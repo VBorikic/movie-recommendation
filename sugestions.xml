@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Movies>
+  <movie URI="http://dbpedia.org/resource/All_About_Love_(2006_film)" id="0">
+    <sugestion>http://dbpedia.org/resource/Far_skal_giftes</sugestion>
+    <sugestion>http://dbpedia.org/resource/Marion_Bridge_(film)</sugestion>
+    <sugestion>http://dbpedia.org/resource/Fraternity_Row_(film)</sugestion>
+    <sugestion>http://dbpedia.org/resource/Gasoline_(film)</sugestion>
+    <sugestion>http://dbpedia.org/resource/Cop_(film)</sugestion>
+  </movie>
+  <movie URI="http://dbpedia.org/resource/Alfred_the_Great_(film)" id="1">
+    <sugestion>http://dbpedia.org/resource/Cops_and_Robbers_(1973_film)</sugestion>
+    <sugestion>http://dbpedia.org/resource/Alexander_Hamilton_(film)</sugestion>
+    <sugestion>http://dbpedia.org/resource/Credo_(1997_film)</sugestion>
+    <sugestion>http://dbpedia.org/resource/Bad_Luck_(film)</sugestion>
+    <sugestion>http://dbpedia.org/resource/After_the_Storm_(1928_film)</sugestion>
+  </movie>
+</Movies>

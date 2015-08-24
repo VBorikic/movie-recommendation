@@ -14,17 +14,17 @@ import java.util.List;
  */
 public class Result {
 
-    private List<SimilarityValue> finalSimilarities;
+    private List<SimilarityMovieValuePair> finalSimilarities;
 
     public Result() {
         finalSimilarities = new ArrayList<>();
     }
 
-    public List<SimilarityValue> getSimilarities() {
+    public List<SimilarityMovieValuePair> getSimilarities() {
         return finalSimilarities;
     }
 
-    public void setSimilarities(List<SimilarityValue> finalSimilarities) {
+    public void setSimilarities(List<SimilarityMovieValuePair> finalSimilarities) {
         this.finalSimilarities = finalSimilarities;
     }
 

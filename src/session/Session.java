@@ -22,6 +22,11 @@ public class Session {
     private List<MovieProperty> movieProperties;
     private List<MovieRecommendation> recommendations;
 
+    private Session(){
+        movieProperties = new ArrayList<>();
+        recommendations = new ArrayList<>();
+    }
+    
     public static Session getInstance() {
         if (instance == null) {
             instance = new Session();
@@ -42,9 +47,9 @@ public class Session {
     }
 
     public void addMovieProperty(MovieProperty mp) {
-        if (movieProperties == null) {
-            movieProperties = new ArrayList<>();
-        }
+//        if (movieProperties == null) {
+//            movieProperties = new ArrayList<>();
+//        }
         movieProperties.add(mp);
     }
 

@@ -26,7 +26,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -47,16 +46,10 @@ public class CacheContinious {
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(filepath);
 
-            // Get the root element
             Node rootElement = doc.getFirstChild();
 
-		// Get the staff element , it may not working if tag has spaces, or
-            // whatever weird characters in front...it's better to use
-            // getElementsByTagName() to get it directly.
-            // Node staff = company.getFirstChild();
-//                Node lastMovie = movies.getLastChild();
             NodeList lastMovie = doc.getElementsByTagName("movie");
-            int lastId = lastMovie.getLength() - 1;
+            int lastId = lastMovie.getLength();
             // update staff attribute
 //		NamedNodeMap attr = lastMovie.getAttributes();
 //		Node id = attr.getNamedItem("id");
@@ -73,7 +66,7 @@ public class CacheContinious {
                 movie.setAttributeNode(movieURI);
 
                 Attr movieID = doc.createAttribute("id");
-                movieID.setValue((i + lastId + 1) + "");
+                movieID.setValue((i + lastId) + "");
                 movie.setAttributeNode(movieID);
 
 //                movie.setTextContent(mr.getMovie().getURI());
@@ -103,14 +96,8 @@ public class CacheContinious {
 
             System.out.println("File Updatad");
 
-        } catch (ParserConfigurationException pce) {
+        } catch (ParserConfigurationException | TransformerException | IOException | SAXException pce) {
             pce.printStackTrace();
-        } catch (TransformerException tfe) {
-            tfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } catch (SAXException sae) {
-            sae.printStackTrace();
         }
     }
 }

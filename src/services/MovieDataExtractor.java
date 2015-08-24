@@ -13,7 +13,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.rdf.model.impl.PropertyImpl;
 import domen.MovieProperty;
-import domen.SimilarityValue;
+import domen.SimilarityMovieValuePair;
 import java.util.ArrayList;
 import java.util.List;
 import session.Session;
@@ -58,7 +58,7 @@ public class MovieDataExtractor {
             RDFNode object = stmt.getObject();
 
             if (!movies.contains(subject)) {
-                SimilarityValue sv = new SimilarityValue();
+                SimilarityMovieValuePair sv = new SimilarityMovieValuePair();
                 sv.setMovie(subject);
                 mp.getSimilarities().add(sv);
                 movies.add(subject);

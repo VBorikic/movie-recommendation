@@ -20,7 +20,8 @@ public class TF_IDF {
 
         int numOfObjects = tfMatrix.length;
         int numOfFeatures = tfMatrix[0].length;
-
+//        System.out.println("numOfObjects "+numOfObjects);
+//        System.out.println("numOfFeatures "+numOfFeatures);
         double[][] tfidfMatrix = new double[numOfObjects][numOfFeatures];
 
         int[] counters = new int[numOfFeatures];
@@ -42,7 +43,7 @@ public class TF_IDF {
             for (int j = 0; j < tfMatrix[i].length; j++) {
                 double logValue = (double) numOfObjects / counters[j];
                 tfidfMatrix[i][j] = tfMatrix[i][j] * Math.log(logValue);
-//                System.out.println(i + "," + j + "= " + tfidfMatrix[i][j]);
+                System.out.println(i + "," + j + "= " + tfidfMatrix[i][j]);
             }
         }
         return tfidfMatrix;

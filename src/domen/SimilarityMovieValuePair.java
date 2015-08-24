@@ -11,7 +11,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
  *
  * @author vlada.borikic
  */
-public class SimilarityValue {
+public class SimilarityMovieValuePair {
     private Resource movie;
     private double similarity;
 
