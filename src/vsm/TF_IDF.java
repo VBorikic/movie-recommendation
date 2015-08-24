@@ -42,7 +42,7 @@ public class TF_IDF {
             for (int j = 0; j < tfMatrix[i].length; j++) {
                 double logValue = (double) numOfObjects / counters[j];
                 tfidfMatrix[i][j] = tfMatrix[i][j] * Math.log(logValue);
-                System.out.println(i + "," + j + "= " + tfidfMatrix[i][j]);
+//                System.out.println(i + "," + j + "= " + tfidfMatrix[i][j]);
             }
         }
         return tfidfMatrix;
@@ -71,7 +71,7 @@ public class TF_IDF {
                 normalizedMatrix[i][j] = matrix[i][j] / (Math.sqrt(normValue));               
                 testSum += Math.pow(matrix[i][j] / (Math.sqrt(normValue)),2);
             }
-           System.out.println("row " + i + ": " + Math.sqrt(testSum)); // has to be 1.0
+//           System.out.println("row " + i + ": " + Math.sqrt(testSum)); // has to be 1.0
         }
 
         return normalizedMatrix;

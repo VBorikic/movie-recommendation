@@ -5,10 +5,14 @@
  */
 package cache;
 
+/**
+ *
+ * @author vlada.borikic
+ */
 import com.hp.hpl.jena.rdf.model.Resource;
 import domen.MovieRecommendation;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -19,36 +23,45 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-/**
- *
- * @author vlada.borikic
- */
-public class CacheRecommendations {
+public class CacheContinious {
 
-    private List<MovieRecommendation> recommendations;
+    List<MovieRecommendation> recommendations;
 
-    public CacheRecommendations(List<MovieRecommendation> recommendations) {
+    public CacheContinious(List<MovieRecommendation> recommendations) {
         this.recommendations = recommendations;
     }
 
     public void cacheToXML() {
 
         try {
-
+            String filepath = "sugestions.xml";
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(filepath);
 
-            // root elements
-            Document doc = docBuilder.newDocument();
-            Element rootElement = doc.createElement("Movies");
-            doc.appendChild(rootElement);
-            List<String> formulaIDs = new ArrayList<String>();
-            System.out.println(recommendations.size());
+            // Get the root element
+            Node rootElement = doc.getFirstChild();
+
+		// Get the staff element , it may not working if tag has spaces, or
+            // whatever weird characters in front...it's better to use
+            // getElementsByTagName() to get it directly.
+            // Node staff = company.getFirstChild();
+//                Node lastMovie = movies.getLastChild();
+            NodeList lastMovie = doc.getElementsByTagName("movie");
+            int lastId = lastMovie.getLength() - 1;
+            // update staff attribute
+//		NamedNodeMap attr = lastMovie.getAttributes();
+//		Node id = attr.getNamedItem("id");
+//		int lastId =(int) Integer.parseInt(id.getTextContent());
+
             for (int i = 0; i < recommendations.size(); i++) {
                 MovieRecommendation mr = recommendations.get(i);
 
@@ -59,9 +72,8 @@ public class CacheRecommendations {
                 movieURI.setValue(mr.getMovie().getURI());
                 movie.setAttributeNode(movieURI);
 
- 
                 Attr movieID = doc.createAttribute("id");
-                movieID.setValue(i + "");
+                movieID.setValue((i + lastId + 1) + "");
                 movie.setAttributeNode(movieID);
 
 //                movie.setTextContent(mr.getMovie().getURI());
@@ -86,19 +98,19 @@ public class CacheRecommendations {
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("sugestions.xml"));
-
-            // Output to console for testing
-            // StreamResult result = new StreamResult(System.out);
+            StreamResult result = new StreamResult(new File(filepath));
             transformer.transform(source, result);
 
-            System.out.println("XML file saved!");
+            System.out.println("File Updatad");
 
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         } catch (TransformerException tfe) {
             tfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (SAXException sae) {
+            sae.printStackTrace();
         }
-
     }
 }

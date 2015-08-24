@@ -5,6 +5,7 @@
  */
 package services;
 
+import cache.CacheRecommendations;
 import com.hp.hpl.jena.rdf.model.Resource;
 import domen.MovieProperty;
 import domen.MovieRecommendation;
@@ -32,7 +33,7 @@ public class MovieRecommendationService {
         movieSuggestions = new ArrayList<>();
     }
 
-    public List<String> suggestMovies(double[] ponderValues, int resultsSize) {
+    public void suggestMovies(double[] ponderValues, int resultsSize) {
         //import data into model/dataset
         DataModelManager.getInstance().importData("data" + File.separator + "data.rdf", "RDF/XML");
 
@@ -55,14 +56,13 @@ public class MovieRecommendationService {
 //        mde.testDataExtraction();
         //calculate results
         List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
+        
         for (int i = 0; i < 9; i++) {
-            
         calculateOneMovie(movieProperties, ponderValues,Session.getInstance().getMovies().get(i));
         }
-        //TODO call writing to XML
-        
-        //return list<String> imena nekoliko najslicnijih filmova
-        return null;
+        //write sugestions to XML
+        CacheRecommendations cr = new CacheRecommendations(Session.getInstance().getRecommendations());
+        cr.cacheToXML();
     }
 
     private void calculateOneMovie(List<MovieProperty> movieProperties, double[] ponderValues, Resource movie) {
@@ -82,13 +82,10 @@ public class MovieRecommendationService {
             }
         });
 
-//        System.out.println("rezultati");
-//        for (int i = 1; i < resultsSize + 1; i++) {
-//            System.out.println(res.getSimilarities().get(i).getMovie().getURI());
-//        }
         MovieRecommendation mr = new MovieRecommendation();
         mr.setMovie(null);
         List<Resource> list = new ArrayList<>();
+        //add 10 recommendations
         for (int i = 1; i < 11; i++) {
             list.add(res.getSimilarities().get(i).getMovie());
         }
