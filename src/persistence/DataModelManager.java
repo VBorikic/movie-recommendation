@@ -7,9 +7,6 @@ package persistence;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.tdb.TDBFactory;
-import com.hp.hpl.jena.util.FileManager;
-import java.util.Date;
 import org.apache.jena.riot.RDFDataMgr;
 
 /**
@@ -18,7 +15,6 @@ import org.apache.jena.riot.RDFDataMgr;
  */
 public class DataModelManager {
 
-    private static final String directory = "tdb";
     private Dataset dataset;
 
     private static DataModelManager INSTANCE;
@@ -38,9 +34,7 @@ public class DataModelManager {
     }
 
     public void importData(String filename, String syntax) {
-//        System.out.println("Importing data - " + new Date());
         dataset = RDFDataMgr.loadDataset("data/data2.rdf");
-//        System.out.println("Import finished - " + new Date());
     }
 
     public void closeDataModel() {

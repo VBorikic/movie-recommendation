@@ -26,7 +26,7 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Hello!");
-        System.out.println("Please wait, Movie list is loading");
+        System.out.println("Please wait, Movie list is loading...");
 
         MovieRecommendationService mrs = new MovieRecommendationService();
         mrs.populateDataFromDataset();
@@ -37,12 +37,12 @@ public class Main {
             for (int i = 0; i < movies.size(); i++) {
                 System.out.println((i + 1) + ") " + BeautifyURI.beautify(movies.get(i).getURI()));
             }
-            System.out.println("\nInsert number of movie from the Movie list:");
+            System.out.println("\nInsert the number of desired movie from the Movie list:");
             try {
                 String movieNumber = br.readLine();
                 int numberFromList = Integer.parseInt(movieNumber) - 1;
 
-                System.out.println("Insert relevance factors(0.0-1.0) for starring, director and movie subject: (ex: 0.35 0.41 0.86)");
+                System.out.println("Insert significance weights(0.0-1.0) for starring, director and movie subject(ex. 0.35 0.41 0.86) : ");
 
                 String ponderValues = br.readLine();
                 String[] ponders = ponderValues.split(" ");
@@ -55,19 +55,19 @@ public class Main {
 
                 List<String> recommendations = mrs.recommend(numberFromList, ponderNumbers, numberOfRec);
 
-                System.out.println("\nMovies simmilar to movie " + BeautifyURI.beautify(recommendations.get(0)) + " :");
+                System.out.println("\nMovies similar to movie " + BeautifyURI.beautify(recommendations.get(0)) + " :");
                 for (int i = 1; i < recommendations.size(); i++) {
                     System.out.println(BeautifyURI.beautify(recommendations.get(i)));
                 }
-                
-                System.out.println("\nInsert N for new recommendation, or X for exit!");
+
+                System.out.println("\nType N for new recommendation, or X for exit!");
                 String command = br.readLine();
-                
+
                 char key = command.charAt(0);
-                
-                if (key=='X') {
+
+                if (key == 'X' || key == 'x') {
                     exit = true;
-                }    
+                }
                 System.out.println("---END---");
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());

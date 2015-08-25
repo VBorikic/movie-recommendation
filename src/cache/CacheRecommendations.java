@@ -64,7 +64,6 @@ public class CacheRecommendations {
                 movieID.setValue(i + "");
                 movie.setAttributeNode(movieID);
 
-//                movie.setTextContent(mr.getMovie().getURI());
                 rootElement.appendChild(movie);
 
                 List<Resource> list = mr.getMovieSugestions();
@@ -73,7 +72,6 @@ public class CacheRecommendations {
                     System.out.println("preporuka " + res.getURI());
                     Element nonTrTerm = doc.createElement("sugestion");
                     nonTrTerm.setTextContent(res.getURI());
-//                    nonTrTerm.appendChild(doc.createTextNode(res.getURI()));
                     movie.appendChild(nonTrTerm);
                 }
             }
@@ -88,16 +86,12 @@ public class CacheRecommendations {
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File("sugestions.xml"));
 
-            // Output to console for testing
-            // StreamResult result = new StreamResult(System.out);
             transformer.transform(source, result);
 
             System.out.println("XML file saved!");
 
-        } catch (ParserConfigurationException pce) {
+        } catch (ParserConfigurationException | TransformerException pce) {
             pce.printStackTrace();
-        } catch (TransformerException tfe) {
-            tfe.printStackTrace();
         }
 
     }

@@ -6,13 +6,14 @@
 package domen;
 
 import com.hp.hpl.jena.rdf.model.Resource;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author vlada.borikic
  */
-public class MovieRecommendation {
+public class MovieRecommendation implements Serializable{
     private Resource movie;
     private List<Resource> movieSugestions;
 

@@ -8,6 +8,7 @@ package session;
 import com.hp.hpl.jena.rdf.model.Resource;
 import domen.MovieProperty;
 import domen.MovieRecommendation;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @author Vlada
  */
-public class Session {
+public class Session implements Serializable{
 
     private static Session instance;
     private List<Resource> movies;

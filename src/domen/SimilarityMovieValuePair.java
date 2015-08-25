@@ -6,12 +6,13 @@
 package domen;
 
 import com.hp.hpl.jena.rdf.model.Resource;
+import java.io.Serializable;
 
 /**
  *
  * @author vlada.borikic
  */
-public class SimilarityMovieValuePair {
+public class SimilarityMovieValuePair implements Serializable{
     private Resource movie;
     private double similarity;
 

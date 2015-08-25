@@ -33,22 +33,15 @@ public class MovieRecommendationService {
         movieSuggestions = new ArrayList<>();
     }
 
-    public void recommendMovies(double[] ponderValues, int resultsSize) {
-        populateDataFromDataset();
-
-//        mde.testDataExtraction();
-        //calculate results
-        List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
-        //setovanje od kog do kog filma se vrsi kalkulacija - zaklucno sa id=0 je uradjeno trenutno
-        for (int i = 0; i < 697; i++) {
-            calculateOneMovie(movieProperties, ponderValues, Session.getInstance().getMovies().get(i),resultsSize);
-        }
-//        System.out.println("broj preporucenih filmova " + Session.getInstance().getRecommendations().size());
-        //write sugestions to XML
-        CacheRecommendations cr = new CacheRecommendations(Session.getInstance().getRecommendations());
-//        CacheContinious cr2 = new CacheContinious(Session.getInstance().getRecommendations());
-        cr.cacheToXML();
-    }
+//    public void recommendMovies(double[] ponderValues, int resultsSize) {
+//        populateDataFromDataset();
+//        //calculate results
+//        List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
+//        
+//        for (int i = 0; i < Session.getInstance().getMovies().size(); i++) {
+//            calculateOneMovie(movieProperties, ponderValues, Session.getInstance().getMovies().get(i),resultsSize);
+//        }
+//    }
 
     public List<String> recommend(int movieNumber, double[] ponderValues, int resultsSize) {
         List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
@@ -60,7 +53,6 @@ public class MovieRecommendationService {
         for (Resource movie : movies) {
             movieNames.add(movie.getURI());
         }
-
         return movieNames;
     }
 
@@ -97,7 +89,6 @@ public class MovieRecommendationService {
                 return Double.compare(sv2.getSimilarity(), sv1.getSimilarity());
             }
         });
-
         MovieRecommendation mr = new MovieRecommendation();
         mr.setMovie(movie);
         List<Resource> list = new ArrayList<>();
@@ -121,14 +112,6 @@ public class MovieRecommendationService {
             res.getSimilarities().add(new SimilarityMovieValuePair());
             res.getSimilarities().get(i).setMovie(Session.getInstance().getMovies().get(i));
         }
-//        double[] globalSimalarityIndexes = new double[similarityVectorLength];
-//        for (int i = 0; i < movieProperties.size(); i++) {
-//            double[] similarityArray = movieProperties.get(i).getSimilarities();
-//            
-//            for (int j = 0; j < similarityVectorLength; j++) {
-//                globalSimalarityIndexes[j] += similarityArray[j] * ponderValues[i];
-//            }
-//        }
         for (int i = 0; i < movieProperties.size(); i++) {
             List<SimilarityMovieValuePair> similarities = movieProperties.get(i).getSimilarities();
             for (int j = 0; j < similarities.size(); j++) {
@@ -137,18 +120,15 @@ public class MovieRecommendationService {
                 res.getSimilarities().get(j).setSimilarity(value);
             }
         }
-//        System.out.println("similarities pondered.");
     }
 
     private void calculateSimilarityValues(List<MovieProperty> movieProperties, int movieFromList) {
         VSMAlgorithm vsm = new VSMAlgorithm();
         for (MovieProperty movieProperty : movieProperties) {
-            //izracunaj vektor slicnosti za jedan properti i setuj ga movieProperty objektu
-//            movieProperty.setSimmilarityIndexes(vsm.calculateObjectSimalarities(movieProperty.getDataMatrix(), 695));
+            //calculate simillarity  vector
             double[] values = vsm.calculateObjectSimalarities(movieProperty.getDataMatrix(), movieFromList);
             //set calculated values to list of similarities  movie-value pairs
             for (int i = 0; i < values.length; i++) {
-//                movieProperty.getSimilarities().add(new SimilarityValue());
                 movieProperty.getSimilarities().get(i).setSimilarity(values[i]);
             }
         }

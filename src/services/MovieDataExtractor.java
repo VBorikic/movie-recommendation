@@ -42,7 +42,7 @@ public class MovieDataExtractor {
         String propertyName = mp.getName();
 
         Property pr = null;
-        //inicijalizuj property za poredjenje
+        //inicialize property for comparison
         if (propertyName.equals("subject")) {
             pr = new PropertyImpl(Constants.DC_TERMS + propertyName);
         } else {
@@ -53,7 +53,7 @@ public class MovieDataExtractor {
 
         while (iter.hasNext()) {
             Statement stmt = iter.nextStatement();  // get next statement
-            Resource subject = stmt.getSubject();     // get the subject
+            Resource subject =stmt.getSubject();     // get the subject
             Property pred = stmt.getPredicate();   // get the predicate
             RDFNode object = stmt.getObject();
 
@@ -78,7 +78,6 @@ public class MovieDataExtractor {
         while (iter2.hasNext()) {
             Statement stmt = iter2.next();
             Resource subject = stmt.getSubject();
-//            Property pred = stmt.getPredicate();
             RDFNode object = stmt.getObject();
             if (stmt.getPredicate().equals(pr)) {
                 for (int i = 0; i < movieMatrix.length; i++) {
@@ -90,24 +89,23 @@ public class MovieDataExtractor {
                 }
             }
         }
-//        return movieMatrix;
         mp.setDataMatrix(movieMatrix);
-//        System.out.println("Popunjena matrica "+propertyName);
-    }
-
-    public void testDataExtraction() {
-        for (int i = 0; i < Session.getInstance().getMovieProperties().size(); i++) {
-            int[][] data = Session.getInstance().getMovieProperties().get(i).getDataMatrix();
-            System.out.println("matrica: "+i+" broj redova "+data.length+" broj kolona "+data[0].length);
-            for (int j = 0; j < data.length; j++) {
-                for (int k = 0; k < data[0].length; k++) {
-                    if (data[j][k]!=0 && data[j][k]!=1) {
-                        System.out.println("podatak razlicit od 0 i 1!");
-                        return;
-                    }
-                }
-            }
-        }
 
     }
+//
+//    public void testDataExtraction() {
+//        for (int i = 0; i < Session.getInstance().getMovieProperties().size(); i++) {
+//            int[][] data = Session.getInstance().getMovieProperties().get(i).getDataMatrix();
+//            System.out.println("matrica: "+i+" broj redova "+data.length+" broj kolona "+data[0].length);
+//            for (int j = 0; j < data.length; j++) {
+//                for (int k = 0; k < data[0].length; k++) {
+//                    if (data[j][k]!=0 && data[j][k]!=1) {
+//                        System.out.println("podatak razlicit od 0 i 1!");
+//                        return;
+//                    }
+//                }
+//            }
+//        }
+//
+//    }
 }
