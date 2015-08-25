@@ -24,8 +24,6 @@ public class DataModelManager {
     private static DataModelManager INSTANCE;
 
     private DataModelManager() {
-//        dataset = RDFDataMgr.loadDataset("data/data_min.rdf");
-//        System.out.println("--- Import finished successfully --- " + new Date());
     }
 
     public static DataModelManager getInstance() {
@@ -40,10 +38,9 @@ public class DataModelManager {
     }
 
     public void importData(String filename, String syntax) {
-        System.out.println("Importing data - " + new Date());
-//        FileManager.get().readModel(dataset.getDefaultModel(), filename, syntax);
-        dataset = RDFDataMgr.loadDataset("data/data_min.rdf");
-        System.out.println("Import finished - " + new Date());
+//        System.out.println("Importing data - " + new Date());
+        dataset = RDFDataMgr.loadDataset("data/data2.rdf");
+//        System.out.println("Import finished - " + new Date());
     }
 
     public void closeDataModel() {

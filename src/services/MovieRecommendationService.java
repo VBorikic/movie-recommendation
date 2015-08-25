@@ -33,9 +33,40 @@ public class MovieRecommendationService {
         movieSuggestions = new ArrayList<>();
     }
 
-    public void suggestMovies(double[] ponderValues, int resultsSize) {
+    public void recommendMovies(double[] ponderValues, int resultsSize) {
+        populateDataFromDataset();
+
+//        mde.testDataExtraction();
+        //calculate results
+        List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
+        //setovanje od kog do kog filma se vrsi kalkulacija - zaklucno sa id=0 je uradjeno trenutno
+        for (int i = 0; i < 697; i++) {
+            calculateOneMovie(movieProperties, ponderValues, Session.getInstance().getMovies().get(i),resultsSize);
+        }
+//        System.out.println("broj preporucenih filmova " + Session.getInstance().getRecommendations().size());
+        //write sugestions to XML
+        CacheRecommendations cr = new CacheRecommendations(Session.getInstance().getRecommendations());
+//        CacheContinious cr2 = new CacheContinious(Session.getInstance().getRecommendations());
+        cr.cacheToXML();
+    }
+
+    public List<String> recommend(int movieNumber, double[] ponderValues, int resultsSize) {
+        List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
+
+        List<Resource> movies = calculateOneMovie(movieProperties, ponderValues, Session.getInstance().getMovies().get(movieNumber),resultsSize);
+
+        List<String> movieNames = new ArrayList<>();
+
+        for (Resource movie : movies) {
+            movieNames.add(movie.getURI());
+        }
+
+        return movieNames;
+    }
+
+    public void populateDataFromDataset() {
         //import data into model/dataset
-        DataModelManager.getInstance().importData("data" + File.separator + "data_min.rdf", "RDF/XML");
+        DataModelManager.getInstance().importData("data" + File.separator + "data2.rdf", "RDF/XML");
 
         MovieDataExtractor mde = new MovieDataExtractor();
 
@@ -43,41 +74,22 @@ public class MovieRecommendationService {
         propertyNames[0] = "starring";
         propertyNames[1] = "director";
         propertyNames[2] = "subject";
-        //extract data from rdf dataset to matrixes       
+        //extract data from rdf dataset to matrixes
         for (int i = 0; i < propertyNames.length; i++) {
             MovieProperty mp = new MovieProperty();
             mp.setName(propertyNames[i]);
             Session.getInstance().addMovieProperty(mp);
             mde.extractMovieDataFromModel(DataModelManager.getInstance().getModel(), mp);
         }
-
-//        mde.testDataExtraction();
-        //calculate results
-        List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
-        //setovanje od kog do kog filma se vrsi kalkulacija - zaklucno sa id=0 je uradjeno trenutno
-        for (int i = 0; i < 2; i++) {
-            calculateOneMovie(movieProperties, ponderValues, Session.getInstance().getMovies().get(i));
-        }
-        System.out.println("broj preporucenih filmova " + Session.getInstance().getRecommendations().size());
-        //write sugestions to XML
-        CacheRecommendations cr = new CacheRecommendations(Session.getInstance().getRecommendations());
-        cr.cacheToXML();
     }
 
-    private void calculateOneMovie(List<MovieProperty> movieProperties, double[] ponderValues, Resource movie) {
+    private List<Resource> calculateOneMovie(List<MovieProperty> movieProperties, double[] ponderValues, Resource movie, int numOFrecemmendations) {
         Result res = new Result();
         int movieNumber = Session.getInstance().getMovieNumberFromList(movie);
         calculateSimilarityValues(movieProperties, movieNumber);
 
         normalizeSimilarityValues(movieProperties, ponderValues, res);
-
-        List<SimilarityMovieValuePair> lista1 = res.getSimilarities();
-        for (SimilarityMovieValuePair pair : lista1) {
-            System.out.println("movie: " + pair.getMovie().getURI() + " value " + pair.getSimilarity());
-        }
-        
         //sort results
-//        Arrays.sort(globalSimalarityIndexes);
         Collections.sort(res.getSimilarities(), new Comparator<SimilarityMovieValuePair>() {
             @Override
             public int compare(SimilarityMovieValuePair sv1, SimilarityMovieValuePair sv2) {
@@ -85,23 +97,19 @@ public class MovieRecommendationService {
                 return Double.compare(sv2.getSimilarity(), sv1.getSimilarity());
             }
         });
-        
-        System.out.println("sortirano");
-        List<SimilarityMovieValuePair> lista2 = res.getSimilarities();
-        for (SimilarityMovieValuePair pair : lista2) {
-            System.out.println("movie: " + pair.getMovie().getURI() + " value " + pair.getSimilarity());
-        }
 
         MovieRecommendation mr = new MovieRecommendation();
         mr.setMovie(movie);
         List<Resource> list = new ArrayList<>();
-        //add 5 recommendations
-        for (int i = 1; i < 6; i++) {
+        //add x recommendations
+        for (int i = 0; i < numOFrecemmendations + 1; i++) {
             list.add(res.getSimilarities().get(i).getMovie());
         }
         mr.setMovieSugestions(list);
         //add recommendation to list
         Session.getInstance().getRecommendations().add(mr);
+
+        return list;
     }
 
     private void normalizeSimilarityValues(List<MovieProperty> movieProperties, double[] ponderValues, Result res) {
@@ -129,7 +137,7 @@ public class MovieRecommendationService {
                 res.getSimilarities().get(j).setSimilarity(value);
             }
         }
-        System.out.println("similarities pondered.");
+//        System.out.println("similarities pondered.");
     }
 
     private void calculateSimilarityValues(List<MovieProperty> movieProperties, int movieFromList) {

@@ -68,8 +68,6 @@ public class MovieDataExtractor {
             }
         }
 
-        System.out.println("property: " + propertyName);
-        System.out.println("broj filmova: " + movies.size());
         if (Session.getInstance().getMovies() == null) {
             Session.getInstance().setMovies(movies);
         }
@@ -94,7 +92,7 @@ public class MovieDataExtractor {
         }
 //        return movieMatrix;
         mp.setDataMatrix(movieMatrix);
-        System.out.println("Popunjena matrica "+propertyName);
+//        System.out.println("Popunjena matrica "+propertyName);
     }
 
     public void testDataExtraction() {

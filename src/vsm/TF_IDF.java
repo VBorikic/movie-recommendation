@@ -20,12 +20,9 @@ public class TF_IDF {
 
         int numOfObjects = tfMatrix.length;
         int numOfFeatures = tfMatrix[0].length;
-//        System.out.println("numOfObjects "+numOfObjects);
-//        System.out.println("numOfFeatures "+numOfFeatures);
         double[][] tfidfMatrix = new double[numOfObjects][numOfFeatures];
 
         int[] counters = new int[numOfFeatures];
-        System.out.println("calculating tfidf for matrix");
         for (int i = 0; i < numOfObjects; i++) {
 
             // counts number of objects that one feature has a connection to
@@ -35,15 +32,11 @@ public class TF_IDF {
                 }
             }
         }
-//        for (int i = 0; i < counters.length; i++) {
-//            
-//        System.out.println("counter value: " + counters[i]);
-//        }
+
         for (int i = 0; i < numOfObjects; i++) {
             for (int j = 0; j < tfMatrix[i].length; j++) {
                 double logValue = (double) numOfObjects / counters[j];
                 tfidfMatrix[i][j] = tfMatrix[i][j] * Math.log(logValue);
-                System.out.println(i + "," + j + "= " + tfidfMatrix[i][j]);
             }
         }
         return tfidfMatrix;
@@ -67,7 +60,6 @@ public class TF_IDF {
             for (int j = 0; j < numOfColumns; j++) {              
                 normValue += Math.pow(matrix[i][j], 2);               
             }
-            
             for (int j = 0; j < numOfColumns; j++) {
                 normalizedMatrix[i][j] = matrix[i][j] / (Math.sqrt(normValue));               
                 testSum += Math.pow(matrix[i][j] / (Math.sqrt(normValue)),2);

@@ -16,8 +16,6 @@ public class MovieProperty {
 
     private String name;
     private int[][] dataMatrix;
-//    private double[] similarityIndexes;
-//    private SimilarityValue[] similarities;
     private List<SimilarityMovieValuePair> similarities;
 
     public MovieProperty() {
@@ -40,20 +38,6 @@ public class MovieProperty {
         this.dataMatrix = dataMatrix;
     }
 
-//    public double[] getSimmilarityIndexes() {
-//        return similarityIndexes;
-//    }
-//
-//    public void setSimmilarityIndexes(double[] simmilarityIndexes) {
-//        this.similarityIndexes = simmilarityIndexes;
-//    }
-//    public SimilarityValue[] getSimilarities() {
-//        return similarities;
-//    }
-//
-//    public void setSimilarities(SimilarityValue[] similarities) {
-//        this.similarities = similarities;
-//    }
     public List<SimilarityMovieValuePair> getSimilarities() {
         return similarities;
     }
