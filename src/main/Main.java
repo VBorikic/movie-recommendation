@@ -5,7 +5,7 @@
  */
 package main;
 
-import com.hp.hpl.jena.rdf.model.Resource;
+import cache.CacheImportedData;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,13 +29,21 @@ public class Main {
         System.out.println("Please wait, Movie list is loading...");
 
         MovieRecommendationService mrs = new MovieRecommendationService();
-        mrs.populateDataFromDataset();
+        CacheImportedData cid = new CacheImportedData();
+        if (cid.isCached()) {
+            cid.retrieveData();
+//            System.out.println("Data retrived");
+        } else {
+            mrs.populateDataFromDataset();
+            cid.cacheData();
+//            System.out.println("data cached to file.");
+        }
 
         while (!exit) {
-            List<Resource> movies = Session.getInstance().getMovies();
+            List<String> movies = Session.getInstance().getMovies();
             System.out.println("Movie list:\n");
             for (int i = 0; i < movies.size(); i++) {
-                System.out.println((i + 1) + ") " + BeautifyURI.beautify(movies.get(i).getURI()));
+                System.out.println((i + 1) + ") " + BeautifyURI.beautify(movies.get(i)));
             }
             System.out.println("\nInsert the number of desired movie from the Movie list:");
             try {

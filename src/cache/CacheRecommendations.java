@@ -5,7 +5,6 @@
  */
 package cache;
 
-import com.hp.hpl.jena.rdf.model.Resource;
 import domen.MovieRecommendation;
 import java.io.File;
 import java.util.ArrayList;
@@ -52,11 +51,11 @@ public class CacheRecommendations {
             for (int i = 0; i < recommendations.size(); i++) {
                 MovieRecommendation mr = recommendations.get(i);
 
-                System.out.println("Film " + mr.getMovie().getURI());
+                System.out.println("Film " + mr.getMovie());
                 Element movie = doc.createElement("movie");
 
                 Attr movieURI = doc.createAttribute("URI");
-                movieURI.setValue(mr.getMovie().getURI());
+                movieURI.setValue(mr.getMovie());
                 movie.setAttributeNode(movieURI);
 
  
@@ -66,12 +65,12 @@ public class CacheRecommendations {
 
                 rootElement.appendChild(movie);
 
-                List<Resource> list = mr.getMovieSugestions();
+                List<String> list = mr.getMovieSugestions();
                 //write terms(MovieRecommendation
-                for (Resource res : list) {
-                    System.out.println("preporuka " + res.getURI());
+                for (String res : list) {
+                    System.out.println("preporuka " + res);
                     Element nonTrTerm = doc.createElement("sugestion");
-                    nonTrTerm.setTextContent(res.getURI());
+                    nonTrTerm.setTextContent(res);
                     movie.appendChild(nonTrTerm);
                 }
             }

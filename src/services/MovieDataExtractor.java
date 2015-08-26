@@ -37,7 +37,7 @@ public class MovieDataExtractor {
      * @param mp MovieProperty
      */
     public void extractMovieDataFromModel(Model model, MovieProperty mp) {
-        List<Resource> movies = new ArrayList<>();
+        List<String> movies = new ArrayList<>();
          List<RDFNode> uniqueFeaturesForProperty = new ArrayList<>();;
         String propertyName = mp.getName();
 
@@ -57,11 +57,11 @@ public class MovieDataExtractor {
             Property pred = stmt.getPredicate();   // get the predicate
             RDFNode object = stmt.getObject();
 
-            if (!movies.contains(subject)) {
+            if (!movies.contains(subject.getURI())) {
                 SimilarityMovieValuePair sv = new SimilarityMovieValuePair();
-                sv.setMovie(subject);
+                sv.setMovie(subject.getURI());
                 mp.getSimilarities().add(sv);
-                movies.add(subject);
+                movies.add(subject.getURI());
             }
             if (!uniqueFeaturesForProperty.contains(object)) {
                 uniqueFeaturesForProperty.add(object);
@@ -82,7 +82,7 @@ public class MovieDataExtractor {
             if (stmt.getPredicate().equals(pr)) {
                 for (int i = 0; i < movieMatrix.length; i++) {
                     for (int j = 0; j < movieMatrix[0].length; j++) {
-                        if (movies.get(i).equals(subject) && uniqueFeaturesForProperty.get(j).equals(object)) {
+                        if (movies.get(i).equals(subject.getURI()) && uniqueFeaturesForProperty.get(j).equals(object)) {
                             movieMatrix[i][j] = 1;
                         }
                     }

@@ -13,7 +13,7 @@ public class BeautifyURI {
 
     public static String beautify(String URI){
         String URIwithout_ = URI.replace('_', ' ');
-        String newURI = URIwithout_.replaceFirst("http://dbpedia.org/resource/", "");
-        return newURI;
+        String cleanMoviename = URIwithout_.replaceFirst("http://dbpedia.org/resource/", "");
+        return cleanMoviename;
     }
 }

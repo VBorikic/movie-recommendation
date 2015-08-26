@@ -5,6 +5,7 @@
  */
 package domen;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author Vlada
  */
-public class Result {
+public class Result implements Serializable{
 
     private List<SimilarityMovieValuePair> finalSimilarities;
 

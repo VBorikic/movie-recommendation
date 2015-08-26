@@ -5,15 +5,12 @@
  */
 package services;
 
-import cache.CacheRecommendations;
-import com.hp.hpl.jena.rdf.model.Resource;
 import domen.MovieProperty;
 import domen.MovieRecommendation;
 import domen.Result;
 import domen.SimilarityMovieValuePair;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -33,25 +30,15 @@ public class MovieRecommendationService {
         movieSuggestions = new ArrayList<>();
     }
 
-//    public void recommendMovies(double[] ponderValues, int resultsSize) {
-//        populateDataFromDataset();
-//        //calculate results
-//        List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
-//        
-//        for (int i = 0; i < Session.getInstance().getMovies().size(); i++) {
-//            calculateOneMovie(movieProperties, ponderValues, Session.getInstance().getMovies().get(i),resultsSize);
-//        }
-//    }
-
     public List<String> recommend(int movieNumber, double[] ponderValues, int resultsSize) {
         List<MovieProperty> movieProperties = Session.getInstance().getMovieProperties();
 
-        List<Resource> movies = calculateOneMovie(movieProperties, ponderValues, Session.getInstance().getMovies().get(movieNumber),resultsSize);
+        List<String> movies = calculateOneMovie(movieProperties, ponderValues, Session.getInstance().getMovies().get(movieNumber), resultsSize);
 
         List<String> movieNames = new ArrayList<>();
 
-        for (Resource movie : movies) {
-            movieNames.add(movie.getURI());
+        for (String movie : movies) {
+            movieNames.add(movie);
         }
         return movieNames;
     }
@@ -75,7 +62,7 @@ public class MovieRecommendationService {
         }
     }
 
-    private List<Resource> calculateOneMovie(List<MovieProperty> movieProperties, double[] ponderValues, Resource movie, int numOFrecemmendations) {
+    private List<String> calculateOneMovie(List<MovieProperty> movieProperties, double[] ponderValues, String movie, int numOFrecemmendations) {
         Result res = new Result();
         int movieNumber = Session.getInstance().getMovieNumberFromList(movie);
         calculateSimilarityValues(movieProperties, movieNumber);
@@ -91,7 +78,7 @@ public class MovieRecommendationService {
         });
         MovieRecommendation mr = new MovieRecommendation();
         mr.setMovie(movie);
-        List<Resource> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         //add x recommendations
         for (int i = 0; i < numOFrecemmendations + 1; i++) {
             list.add(res.getSimilarities().get(i).getMovie());

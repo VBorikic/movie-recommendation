@@ -5,7 +5,6 @@
  */
 package domen;
 
-import com.hp.hpl.jena.rdf.model.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,22 +13,22 @@ import java.util.List;
  * @author vlada.borikic
  */
 public class MovieRecommendation implements Serializable{
-    private Resource movie;
-    private List<Resource> movieSugestions;
+    private String movie;
+    private List<String> movieSugestions;
 
-    public Resource getMovie() {
+    public String getMovie() {
         return movie;
     }
 
-    public void setMovie(Resource movie) {
+    public void setMovie(String movie) {
         this.movie = movie;
     }
 
-    public List<Resource> getMovieSugestions() {
+    public List<String> getMovieSugestions() {
         return movieSugestions;
     }
 
-    public void setMovieSugestions(List<Resource> movieSugestions) {
+    public void setMovieSugestions(List<String> movieSugestions) {
         this.movieSugestions = movieSugestions;
     }
     
